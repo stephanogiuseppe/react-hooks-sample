@@ -1,25 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 
 function App() {
-  const [tech, setTech] = useState([])
+  const [techs, setTech] = useState([])
   const [newTech, setNewTech] = useState('')
 
   const handleAdd = () => {
-    setTech([...tech, newTech])
+    setTech([...techs, newTech])
     setNewTech('')
   }
 
   useEffect(() => {
-    const storeTech = localStorage.getItem('tech')
-    storeTech && setTech(JSON.parse(storeTech))
+    const tech = localStorage.getItem('tech')
+    tech && setTech(JSON.parse(tech))
   }, [])
 
-  useEffect(() => {localStorage.setItem('tech', JSON.stringify(tech))}, [tech])
+  useEffect(() => {
+    localStorage.setItem('techs', JSON.stringify(techs))
+  }, [techs])
 
   return (
     <>
       <ul>
-        {tech.map(tech => (
+        {techs.map(tech => (
           <li key={tech}>{tech}</li>
         ))}
       </ul>
@@ -28,6 +30,7 @@ function App() {
         value={newTech}
         onChange={e => setNewTech(e.target.value)}
       />
+      <p>{techs.length} items</p>
       <button type="button" onClick={handleAdd}>Add</button>
     </>
   );
