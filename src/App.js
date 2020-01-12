@@ -1,13 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 function App() {
-  const [tech, setTech] = useState(['ReactJS', 'React Native'])
+  const [tech, setTech] = useState([])
   const [newTech, setNewTech] = useState('')
 
   const handleAdd = () => {
     setTech([...tech, newTech])
     setNewTech('')
   }
+
+  useEffect(() => {
+    const storeTech = localStorage.getItem('tech')
+    storeTech && setTech(JSON.parse(storeTech))
+  }, [])
+
+  useEffect(() => {localStorage.setItem('tech', JSON.stringify(tech))}, [tech])
 
   return (
     <>
