@@ -9,6 +9,8 @@ function App() {
     setNewTech('')
   }
 
+  const techsSize = useMemo(() => techs.length, [techs])
+
   useEffect(() => {
     const tech = localStorage.getItem('tech')
     tech && setTech(JSON.parse(tech))
@@ -30,7 +32,7 @@ function App() {
         value={newTech}
         onChange={e => setNewTech(e.target.value)}
       />
-      <p>{techs.length} items</p>
+      <p>{techsSize} items</p>
       <button type="button" onClick={handleAdd}>Add</button>
     </>
   );
