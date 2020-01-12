@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 
 function App() {
   const [techs, setTech] = useState([])
   const [newTech, setNewTech] = useState('')
 
-  const handleAdd = () => {
+  const handleAdd = useCallback(() => {
     setTech([...techs, newTech])
     setNewTech('')
-  }
+  }, [newTech, techs])
 
   const techsSize = useMemo(() => techs.length, [techs])
 
   useEffect(() => {
-    const tech = localStorage.getItem('tech')
+    const tech = localStorage.getItem('techs')
     tech && setTech(JSON.parse(tech))
   }, [])
 
